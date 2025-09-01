@@ -203,8 +203,8 @@ display_system_info() {
     cpu_info=$(grep 'model name' /proc/cpuinfo | uniq | awk -F': ' '{print $2}')
     cpu_cores=$(grep -c 'processor' /proc/cpuinfo)
     total_mem=$(free -h | awk '/^Mem:/ {print $2}')
-    current_usage=$(free -h | awk --source '{printf "Used: %s / Swap: %s", $3, $7}' | sed "s/Used/$(get_text used)/g" | sed "s/Swap/$(get_text swap)/g")
-    disk_usage=$(df -h / | awk --source 'NR==2 {printf "Used: %s / Total: %s (%s)", $3, $2, $5}' | sed "s/Used/$(get_text used)/g" | sed "s/Total/$(get_text total)/g")
+    current_usage=$(free -h | awk '/^Mem:/ {printf "Used: %s / Swap: %s", $3, $7}' | sed "s/Used/$(get_text used)/g" | sed "s/Swap/$(get_text swap)/g")
+    disk_usage=$(df -h / | awk 'NR==2 {printf "Used: %s / Total: %s (%s)", $3, $2, $5}' | sed "s/Used/$(get_text used)/g" | sed "s/Total/$(get_text total)/g")
 
     echo -e "${MAGENTA}${BOLD}$(get_text sys_config):${NC}"
     echo -e " ${YELLOW}$(get_text cpu_model):${NC}  ${cpu_info}"
