@@ -10,7 +10,7 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 MAGENTA='\033[0;95m'
 BOLD='\033[1m'
-NC='\033[0m'
+NC='\033[0m' # No Color
 
 # --- Text Definitions ---
 
@@ -41,11 +41,11 @@ text_menu_8_en="Enable IPv6 (Reboot required)"
 text_menu_9_en="Prefer IPv4"
 text_menu_10_en="Prefer IPv6"
 text_menu_11_en="Switch to Chinese (切换到中文)"
-text_menu_0_en="Exit"
+text_menu_0_en="Exit & Clean Script"
 text_prompt_select_en="Please select an option"
 text_prompt_continue_en="Press any key to return to the menu..."
 text_invalid_option_en="Invalid option. Please try again."
-text_exiting_en="Exiting."
+text_exiting_en="Exiting and cleaning up script file..."
 text_auto_config_start_en="--- Starting Automated System Configuration ---"
 text_auto_config_update_en="Updating and upgrading system packages..."
 text_auto_config_deps_en="Installing essential dependencies..."
@@ -113,11 +113,11 @@ text_menu_8_zh="启用 IPv6 (需要重启)"
 text_menu_9_zh="设置为 IPv4 优先"
 text_menu_10_zh="设置为 IPv6 优先"
 text_menu_11_zh="Switch to English (切换到英文)"
-text_menu_0_zh="退出"
+text_menu_0_zh="退出并清理脚本"
 text_prompt_select_zh="请输入选项"
 text_prompt_continue_zh="按任意键返回主菜单..."
 text_invalid_option_zh="无效选项，请重试。"
-text_exiting_zh="正在退出。"
+text_exiting_zh="正在退出并清理脚本文件..."
 text_auto_config_start_zh="--- 开始自动化系统配置 ---"
 text_auto_config_update_zh="正在更新和升级系统软件包..."
 text_auto_config_deps_zh="正在安装核心依赖..."
@@ -400,7 +400,12 @@ main() {
             9) set_ip_priority "ipv4" ;;
             10) set_ip_priority "ipv6" ;;
             11) toggle_language; needs_pause=false ;;
-            0) echo "$(get_text exiting)"; exit 0 ;;
+            0) 
+                echo "$(get_text exiting)"
+                # Self-cleaning command
+                rm -- "$0"
+                exit 0 
+                ;;
             *) echo -e "${RED}$(get_text invalid_option)${NC}" ;;
         esac
         
