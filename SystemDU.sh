@@ -33,7 +33,7 @@ text_swap_en="SWAP"
 text_status_en="System Status"
 text_os_version_en="OS Version"
 text_kernel_version_en="Kernel"
-text_net_opt_en="Network Optimization"
+text_net_opt_en="Network Opt."
 text_tcp_accel_en="TCP Acceleration"
 text_menu_title_en="--- System Configuration & Management ---"
 text_menu_1_en="Show Basic System Information"
@@ -53,7 +53,45 @@ text_prompt_select_en="Please select an option"
 text_prompt_continue_en="Press any key to return to the menu..."
 text_invalid_option_en="Invalid option. Please try again."
 text_exiting_en="Exiting and cleaning up script file..."
-# ... (rest of the English text variables remain the same)
+text_auto_config_start_en="--- Starting Automated System Configuration ---"
+text_auto_config_update_en="Updating and upgrading system packages..."
+text_auto_config_deps_en="Installing essential dependencies..."
+text_auto_config_grub_en="Updating GRUB..."
+text_auto_config_done_en="--- Automated Configuration Complete! ---"
+text_bbr_backup_en="Original sysctl.conf backed up to /etc/sysctl.conf.bak_bbr"
+text_bbr_enable_en="Enabling BBR + FQ..."
+text_bbr_verify_en="Verifying BBR status..."
+text_bbr_success_en="BBR + FQ has been successfully enabled."
+text_bbr_fail_en="Failed to enable BBR. Kernel version 4.9+ is required."
+text_bbr_restore_en="Restoring original sysctl configuration..."
+text_bbr_restore_success_en="Original sysctl configuration has been restored."
+text_bbr_restore_fail_en="No backup file found. Cannot restore."
+text_swap_exists_en="A SWAP file or partition already exists."
+text_swap_prompt_size_en="Enter SWAP size in Megabytes (e.g., 1024 for 1GB):"
+text_swap_invalid_input_en="Invalid input. Please enter a number."
+text_swap_creating_en="Creating a %sMB SWAP file at /swapfile..."
+text_swap_success_en="SWAP file created and enabled successfully."
+text_swap_delete_fail_en="No /swapfile found to delete."
+text_swap_deleting_en="Disabling and deleting /swapfile..."
+text_swap_delete_success_en="SWAP file has been deleted."
+text_hostname_current_en="Current hostname is"
+text_hostname_prompt_new_en="Enter the new hostname:"
+text_hostname_empty_en="Hostname cannot be empty."
+text_hostname_setting_en="Setting new hostname to '%s'..."
+text_hostname_success_en="Hostname has been permanently changed to '%s'."
+text_hostname_note_en="Note: The change will be fully visible after a new login session."
+text_ipv6_disable_en="Disabling IPv6..."
+text_ipv6_disable_success_en="IPv6 has been disabled via sysctl."
+text_ipv6_enable_en="Enabling IPv6..."
+text_ipv6_enable_success_en="IPv6 has been enabled via sysctl."
+text_reboot_prompt_en="To ensure the change is fully applied, a system reboot is recommended."
+text_reboot_confirm_en="Do you want to reboot now? (y/n):"
+text_reboot_now_en="Rebooting now..."
+text_reboot_cancel_en="Reboot cancelled. Please reboot manually later."
+text_ipv4_set_pref_en="Setting IPv4 as preferred..."
+text_ipv4_set_pref_success_en="IPv4 is now preferred. Changes take effect immediately for new connections."
+text_ipv6_set_pref_en="Setting IPv6 as preferred..."
+text_ipv6_set_pref_success_en="IPv6 is now preferred. Changes take effect immediately for new connections."
 
 # Chinese
 text_root_check_zh="错误：此脚本必须以root用户身份运行。请使用 sudo。"
@@ -258,11 +296,10 @@ show_basic_system_info() {
         if command -v dig &> /dev/null; then
              host_info=$(dig +short -x "$ipv4" | sed 's/\.$//')
         fi
-        # --- FIX START: Fallback for Host field ---
+        # Fallback for Host field
         if [ -z "$host_info" ]; then
             host_info="$ipv4"
         fi
-        # --- FIX END ---
         
         printf "%-18s: %s\n" "ISP" "$(echo "$ip_info" | jq -r .isp)"
         printf "%-18s: %s\n" "ASN" "$(echo "$ip_info" | jq -r .as)"
