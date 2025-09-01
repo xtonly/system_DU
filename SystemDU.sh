@@ -33,7 +33,7 @@ text_swap_en="SWAP"
 text_status_en="System Status"
 text_os_version_en="OS Version"
 text_kernel_version_en="Kernel"
-text_bbr_status_en="Congestion Control"
+text_net_opt_en="Network Optimization"
 text_menu_title_en="--- New System Auto-Configuration ---"
 text_menu_1_en="One-Click Automated Setup (Update & Dependencies)"
 text_menu_2_en="Configure BBR + FQ"
@@ -72,7 +72,7 @@ text_swap_zh="交换分区"
 text_status_zh="系统状态"
 text_os_version_zh="系统版本"
 text_kernel_version_zh="内核版本"
-text_bbr_status_zh="拥塞控制算法"
+text_net_opt_zh="网络优化"
 text_menu_title_zh="--- 新系统自动化配置 ---"
 text_menu_1_zh="一键自动化配置 (更新系统与依赖)"
 text_menu_2_zh="配置 BBR + FQ"
@@ -171,19 +171,21 @@ display_status_info() {
     os_version=$(grep "PRETTY_NAME" /etc/os-release | cut -d'=' -f2 | tr -d '"')
     kernel_version=$(uname -r)
     
-    # --- FIX START: Display the actual congestion control algorithm ---
+    # --- FIX START: Display both BBR and FQ status ---
     congestion_algo=$(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk -F'= ' '{print $2}')
-    if [ "$congestion_algo" == "bbr" ]; then
-        bbr_status="${GREEN}${congestion_algo}${NC}"
+    qdisc_algo=$(sysctl net.core.default_qdisc 2>/dev/null | awk -F'= ' '{print $2}')
+    
+    if [ "$congestion_algo" == "bbr" ] && [[ "$qdisc_algo" == "fq"* ]]; then
+        net_opt_status="${GREEN}${congestion_algo} + ${qdisc_algo}${NC}"
     else
-        bbr_status="${RED}${congestion_algo}${NC}"
+        net_opt_status="${RED}${congestion_algo} + ${qdisc_algo}${NC}"
     fi
     # --- FIX END ---
 
     echo -e "${MAGENTA}${BOLD}$(get_text status_en):${NC}"
     echo -e " ${YELLOW}$(get_text os_version_en):${NC} ${os_version}"
     echo -e " ${YELLOW}$(get_text kernel_version_en):${NC}  ${kernel_version}"
-    echo -e " ${YELLOW}$(get_text bbr_status_en):${NC}  ${bbr_status}"
+    echo -e " ${YELLOW}$(get_text net_opt_en):${NC}       ${net_opt_status}"
     echo -e "${CYAN}=======================================================================${NC}"
 }
 
