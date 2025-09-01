@@ -28,7 +28,7 @@ text_memory_en="Memory"
 text_disk_en="Disk (/)"
 text_total_en="Total"
 text_used_en="Used"
-text_swap_en="Swap"
+text_swap_en="SWAP"
 text_menu_title_en="--- New System Auto-Configuration ---"
 text_menu_1_en="One-Click Automated Setup (Update & Dependencies)"
 text_menu_2_en="Configure BBR + FQ"
@@ -100,7 +100,7 @@ text_memory_zh="内存"
 text_disk_zh="磁盘 (/)"
 text_total_zh="总共"
 text_used_zh="已用"
-text_swap_zh="交换"
+text_swap_zh="交换分区"
 text_menu_title_zh="--- 新系统自动化配置 ---"
 text_menu_1_zh="一键自动化配置 (更新系统与依赖)"
 text_menu_2_zh="配置 BBR + FQ"
@@ -202,15 +202,34 @@ display_header() {
 display_system_info() {
     cpu_info=$(grep 'model name' /proc/cpuinfo | uniq | awk -F': ' '{print $2}')
     cpu_cores=$(grep -c 'processor' /proc/cpuinfo)
-    total_mem=$(free -h | awk '/^Mem:/ {print $2}')
-    current_usage=$(free -h | awk '/^Mem:/ {printf "Used: %s / Swap: %s", $3, $7}' | sed "s/Used/$(get_text used)/g" | sed "s/Swap/$(get_text swap)/g")
-    disk_usage=$(df -h / | awk 'NR==2 {printf "Used: %s / Total: %s (%s)", $3, $2, $5}' | sed "s/Used/$(get_text used)/g" | sed "s/Total/$(get_text total)/g")
+    
+    # --- FIX START: Corrected and improved system info gathering ---
+    # Get Memory Info
+    mem_info_line=$(free -h | awk '/^Mem:/ {print $2, $3}')
+    total_mem=$(echo "$mem_info_line" | awk '{print $1}')
+    used_mem=$(echo "$mem_info_line" | awk '{print $2}')
+    mem_display_str="$(get_text total): ${total_mem} / $(get_text used): ${used_mem}"
 
+    # Get SWAP Info
+    swap_info_line=$(free -h | awk '/^Swap:/ {print $2, $3}')
+    total_swap=$(echo "$swap_info_line" | awk '{print $1}')
+    used_swap=$(echo "$swap_info_line" | awk '{print $2}')
+    swap_display_str="$(get_text total): ${total_swap} / $(get_text used): ${used_swap}"
+
+    # Get Disk Info
+    disk_info_line=$(df -h / | awk 'NR==2 {print $2, $3, $5}')
+    total_disk=$(echo "$disk_info_line" | awk '{print $1}')
+    used_disk=$(echo "$disk_info_line" | awk '{print $2}')
+    percent_disk=$(echo "$disk_info_line" | awk '{print $3}')
+    disk_display_str="$(get_text used): ${used_disk} / $(get_text total): ${total_disk} (${percent_disk})"
+    # --- FIX END ---
+    
     echo -e "${MAGENTA}${BOLD}$(get_text sys_config):${NC}"
     echo -e " ${YELLOW}$(get_text cpu_model):${NC}  ${cpu_info}"
     echo -e " ${YELLOW}$(get_text cpu_cores):${NC}  ${cpu_cores}"
-    echo -e " ${YELLOW}$(get_text memory):${NC}     $(get_text total): ${total_mem} | ${current_usage}"
-    echo -e " ${YELLOW}$(get_text disk):${NC}   ${disk_usage}"
+    echo -e " ${YELLOW}$(get_text memory):${NC}     ${mem_display_str}"
+    echo -e " ${YELLOW}$(get_text swap):${NC}     ${swap_display_str}"
+    echo -e " ${YELLOW}$(get_text disk):${NC}   ${disk_display_str}"
     echo -e "${CYAN}=======================================================================${NC}"
 }
 
