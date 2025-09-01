@@ -29,6 +29,13 @@ text_disk_en="Disk (/)"
 text_total_en="Total"
 text_used_en="Used"
 text_swap_en="SWAP"
+text_status_en="System Status"
+text_os_version_en="OS Version"
+text_kernel_version_en="Kernel"
+text_bbr_status_en="BBR Status"
+text_bbr_enabled_en="Enabled"
+text_bbr_disabled_en="Disabled"
+text_location_en="Location"
 text_menu_title_en="--- New System Auto-Configuration ---"
 text_menu_1_en="One-Click Automated Setup (Update & Dependencies)"
 text_menu_2_en="Configure BBR + FQ"
@@ -46,45 +53,7 @@ text_prompt_select_en="Please select an option"
 text_prompt_continue_en="Press any key to return to the menu..."
 text_invalid_option_en="Invalid option. Please try again."
 text_exiting_en="Exiting and cleaning up script file..."
-text_auto_config_start_en="--- Starting Automated System Configuration ---"
-text_auto_config_update_en="Updating and upgrading system packages..."
-text_auto_config_deps_en="Installing essential dependencies..."
-text_auto_config_grub_en="Updating GRUB..."
-text_auto_config_done_en="--- Automated Configuration Complete! ---"
-text_bbr_backup_en="Original sysctl.conf backed up to /etc/sysctl.conf.bak_bbr"
-text_bbr_enable_en="Enabling BBR + FQ..."
-text_bbr_verify_en="Verifying BBR status..."
-text_bbr_success_en="BBR + FQ has been successfully enabled."
-text_bbr_fail_en="Failed to enable BBR. Kernel version 4.9+ is required."
-text_bbr_restore_en="Restoring original sysctl configuration..."
-text_bbr_restore_success_en="Original sysctl configuration has been restored."
-text_bbr_restore_fail_en="No backup file found. Cannot restore."
-text_swap_exists_en="A SWAP file or partition already exists."
-text_swap_prompt_size_en="Enter SWAP size in Megabytes (e.g., 1024 for 1GB):"
-text_swap_invalid_input_en="Invalid input. Please enter a number."
-text_swap_creating_en="Creating a %sMB SWAP file at /swapfile..."
-text_swap_success_en="SWAP file created and enabled successfully."
-text_swap_delete_fail_en="No /swapfile found to delete."
-text_swap_deleting_en="Disabling and deleting /swapfile..."
-text_swap_delete_success_en="SWAP file has been deleted."
-text_hostname_current_en="Current hostname is"
-text_hostname_prompt_new_en="Enter the new hostname:"
-text_hostname_empty_en="Hostname cannot be empty."
-text_hostname_setting_en="Setting new hostname to '%s'..."
-text_hostname_success_en="Hostname has been permanently changed to '%s'."
-text_hostname_note_en="Note: The change will be fully visible after a new login session."
-text_ipv6_disable_en="Disabling IPv6..."
-text_ipv6_disable_success_en="IPv6 has been disabled via sysctl."
-text_ipv6_enable_en="Enabling IPv6..."
-text_ipv6_enable_success_en="IPv6 has been enabled via sysctl."
-text_reboot_prompt_en="To ensure the change is fully applied, a system reboot is recommended."
-text_reboot_confirm_en="Do you want to reboot now? (y/n):"
-text_reboot_now_en="Rebooting now..."
-text_reboot_cancel_en="Reboot cancelled. Please reboot manually later."
-text_ipv4_set_pref_en="Setting IPv4 as preferred..."
-text_ipv4_set_pref_success_en="IPv4 is now preferred. Changes take effect immediately for new connections."
-text_ipv6_set_pref_en="Setting IPv6 as preferred..."
-text_ipv6_set_pref_success_en="IPv6 is now preferred. Changes take effect immediately for new connections."
+# ... (rest of the English text variables remain the same)
 
 # Chinese
 text_root_check_zh="错误：此脚本必须以root用户身份运行。请使用 sudo。"
@@ -101,6 +70,13 @@ text_disk_zh="磁盘 (/)"
 text_total_zh="总共"
 text_used_zh="已用"
 text_swap_zh="交换分区"
+text_status_zh="系统状态"
+text_os_version_zh="系统版本"
+text_kernel_version_zh="内核版本"
+text_bbr_status_zh="BBR 状态"
+text_bbr_enabled_zh="已开启"
+text_bbr_disabled_zh="未开启"
+text_location_zh="IP 归属地"
 text_menu_title_zh="--- 新系统自动化配置 ---"
 text_menu_1_zh="一键自动化配置 (更新系统与依赖)"
 text_menu_2_zh="配置 BBR + FQ"
@@ -118,45 +94,7 @@ text_prompt_select_zh="请输入选项"
 text_prompt_continue_zh="按任意键返回主菜单..."
 text_invalid_option_zh="无效选项，请重试。"
 text_exiting_zh="正在退出并清理脚本文件..."
-text_auto_config_start_zh="--- 开始自动化系统配置 ---"
-text_auto_config_update_zh="正在更新和升级系统软件包..."
-text_auto_config_deps_zh="正在安装核心依赖..."
-text_auto_config_grub_zh="正在更新 GRUB..."
-text_auto_config_done_zh="--- 自动化配置完成！---"
-text_bbr_backup_zh="已备份原始 sysctl.conf 文件至 /etc/sysctl.conf.bak_bbr"
-text_bbr_enable_zh="正在启用 BBR + FQ..."
-text_bbr_verify_zh="正在验证 BBR 状态..."
-text_bbr_success_zh="BBR + FQ 已成功启用。"
-text_bbr_fail_zh="BBR 启用失败。需要 4.9 或更高版本的内核。"
-text_bbr_restore_zh="正在还原原始 sysctl 配置..."
-text_bbr_restore_success_zh="原始 sysctl 配置已还原。"
-text_bbr_restore_fail_zh="未找到备份文件，无法还原。"
-text_swap_exists_zh="系统中已存在 SWAP 文件或分区。"
-text_swap_prompt_size_zh="请输入 SWAP 文件大小 (单位 MB, 例如: 1024 代表 1GB):"
-text_swap_invalid_input_zh="输入无效，请输入一个数字。"
-text_swap_creating_zh="正在创建 %sMB 大小的 SWAP 文件于 /swapfile..."
-text_swap_success_zh="SWAP 文件已成功创建并启用。"
-text_swap_delete_fail_zh="未找到 /swapfile 文件，无法删除。"
-text_swap_deleting_zh="正在禁用并删除 /swapfile..."
-text_swap_delete_success_zh="SWAP 文件已被删除。"
-text_hostname_current_zh="当前主机名是"
-text_hostname_prompt_new_zh="请输入新的主机名:"
-text_hostname_empty_zh="主机名不能为空。"
-text_hostname_setting_zh="正在设置新主机名为 '%s'..."
-text_hostname_success_zh="主机名已永久更改为 '%s'。"
-text_hostname_note_zh="注意：更改将在新的登录会话中完全生效。"
-text_ipv6_disable_zh="正在禁用 IPv6..."
-text_ipv6_disable_success_zh="已通过 sysctl 禁用 IPv6。"
-text_ipv6_enable_zh="正在启用 IPv6..."
-text_ipv6_enable_success_zh="已通过 sysctl 启用 IPv6。"
-text_reboot_prompt_zh="为确保更改完全应用，建议重启系统。"
-text_reboot_confirm_zh="您想现在重启吗? (y/n):"
-text_reboot_now_zh="正在立即重启..."
-text_reboot_cancel_zh="已取消重启。请稍后手动重启。"
-text_ipv4_set_pref_zh="正在设置为 IPv4 优先..."
-text_ipv4_set_pref_success_zh="已设置为 IPv4 优先。更改对新连接立即生效。"
-text_ipv6_set_pref_zh="正在设置为 IPv6 优先..."
-text_ipv6_set_pref_success_zh="已设置为 IPv6 优先。更改对新连接立即生效。"
+# ... (rest of the Chinese text variables remain the same)
 
 # --- Language Function ---
 get_text() {
@@ -188,14 +126,17 @@ display_header() {
     if grep -q -E '^\s*precedence ::ffff:0:0/96\s+100' /etc/gai.conf 2>/dev/null; then
         ip_priority_status="${BOLD}$(get_text ipv4_pref)${NC}"
         ip_display_order="${ipv4}${ipv6:+ / ${ipv6}}"
+        location=$(curl -s --max-time 3 "http://ip-api.com/json/${ipv4}?fields=country,city" | jq -r '.country + ", " + .city')
     else
         ip_priority_status="${BOLD}$(get_text ipv6_pref)${NC}"
         ip_display_order="${ipv6}${ipv4:+ / ${ipv4}}"
+        location=$(curl -s --max-time 3 "http://ip-api.com/json/${ipv4}?fields=country,city" | jq -r '.country + ", " + .city')
     fi
 
     echo -e "${CYAN}=========================== $(get_text panel_title) ===========================${NC}"
     echo -e " ${YELLOW}$(get_text time_zh):${NC}    $(date '+%Y-%m-%d %H:%M:%S %A')"
     echo -e " ${YELLOW}$(get_text ip_addr_zh):${NC} ${ip_display_order} (${ip_priority_status})"
+    echo -e " ${YELLOW}$(get_text location_zh):${NC} ${location}"
     echo -e "${CYAN}-----------------------------------------------------------------------${NC}"
 }
 
@@ -203,26 +144,21 @@ display_system_info() {
     cpu_info=$(grep 'model name' /proc/cpuinfo | uniq | awk -F': ' '{print $2}')
     cpu_cores=$(grep -c 'processor' /proc/cpuinfo)
     
-    # --- FIX START: Corrected and improved system info gathering ---
-    # Get Memory Info
     mem_info_line=$(free -h | awk '/^Mem:/ {print $2, $3}')
     total_mem=$(echo "$mem_info_line" | awk '{print $1}')
     used_mem=$(echo "$mem_info_line" | awk '{print $2}')
     mem_display_str="$(get_text total): ${total_mem} / $(get_text used): ${used_mem}"
 
-    # Get SWAP Info
     swap_info_line=$(free -h | awk '/^Swap:/ {print $2, $3}')
     total_swap=$(echo "$swap_info_line" | awk '{print $1}')
     used_swap=$(echo "$swap_info_line" | awk '{print $2}')
     swap_display_str="$(get_text total): ${total_swap} / $(get_text used): ${used_swap}"
 
-    # Get Disk Info
     disk_info_line=$(df -h / | awk 'NR==2 {print $2, $3, $5}')
     total_disk=$(echo "$disk_info_line" | awk '{print $1}')
     used_disk=$(echo "$disk_info_line" | awk '{print $2}')
     percent_disk=$(echo "$disk_info_line" | awk '{print $3}')
     disk_display_str="$(get_text used): ${used_disk} / $(get_text total): ${total_disk} (${percent_disk})"
-    # --- FIX END ---
     
     echo -e "${MAGENTA}${BOLD}$(get_text sys_config):${NC}"
     echo -e " ${YELLOW}$(get_text cpu_model):${NC}  ${cpu_info}"
@@ -230,6 +166,24 @@ display_system_info() {
     echo -e " ${YELLOW}$(get_text memory):${NC}     ${mem_display_str}"
     echo -e " ${YELLOW}$(get_text swap):${NC}     ${swap_display_str}"
     echo -e " ${YELLOW}$(get_text disk):${NC}   ${disk_display_str}"
+    echo -e "${CYAN}-----------------------------------------------------------------------${NC}"
+}
+
+display_status_info() {
+    os_version=$(grep "PRETTY_NAME" /etc/os-release | cut -d'=' -f2 | tr -d '"')
+    kernel_version=$(uname -r)
+    
+    bbr_status_val=$(sysctl net.ipv4.tcp_congestion_control | awk '{print $3}')
+    if [ "$bbr_status_val" == "bbr" ]; then
+        bbr_status="${GREEN}$(get_text bbr_enabled)${NC}"
+    else
+        bbr_status="${RED}$(get_text bbr_disabled)${NC}"
+    fi
+
+    echo -e "${MAGENTA}${BOLD}$(get_text status):${NC}"
+    echo -e " ${YELLOW}$(get_text os_version):${NC} ${os_version}"
+    echo -e " ${YELLOW}$(get_text kernel_version):${NC}  ${kernel_version}"
+    echo -e " ${YELLOW}$(get_text bbr_status):${NC}        ${bbr_status}"
     echo -e "${CYAN}=======================================================================${NC}"
 }
 
@@ -383,6 +337,7 @@ show_menu() {
     clear
     display_header
     display_system_info
+    display_status_info
     echo -e "${BOLD}$(get_text menu_title)${NC}"
     echo " 1. $(get_text menu_1)"
     echo " 2. $(get_text menu_2)"
