@@ -33,7 +33,7 @@ text_swap_en="SWAP"
 text_status_en="System Status"
 text_os_version_en="OS Version"
 text_kernel_version_en="Kernel"
-text_net_opt_en="Network Opt." # Shortened for header
+text_net_opt_en="Network Optimization"
 text_tcp_accel_en="TCP Acceleration"
 text_menu_title_en="--- System Configuration & Management ---"
 text_menu_1_en="Show Basic System Information"
@@ -254,13 +254,19 @@ show_basic_system_info() {
     ip_info=$(curl -s --max-time 5 "http://ip-api.com/json/${ipv4}?fields=status,message,country,city,isp,as,query")
     
     if [ "$(echo "$ip_info" | jq -r .status)" == "success" ]; then
+        local host_info
+        if command -v dig &> /dev/null; then
+             host_info=$(dig +short -x "$ipv4" | sed 's/\.$//')
+        fi
+        # --- FIX START: Fallback for Host field ---
+        if [ -z "$host_info" ]; then
+            host_info="$ipv4"
+        fi
+        # --- FIX END ---
+        
         printf "%-18s: %s\n" "ISP" "$(echo "$ip_info" | jq -r .isp)"
         printf "%-18s: %s\n" "ASN" "$(echo "$ip_info" | jq -r .as)"
-        if command -v dig &> /dev/null; then
-             printf "%-18s: %s\n" "Host" "$(dig +short -x "$ipv4" | sed 's/\.$//' || echo "$ipv4")"
-        else
-             printf "%-18s: %s\n" "Host" "$ipv4"
-        fi
+        printf "%-18s: %s\n" "Host" "$host_info"
         printf "%-18s: %s, %s\n" "$(get_text location)" "$(echo "$ip_info" | jq -r .city)" "$(echo "$ip_info" | jq -r .country)"
         printf "%-18s: %s\n" "Country" "$(echo "$ip_info" | jq -r .country)"
     else
