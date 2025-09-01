@@ -23,16 +23,17 @@ display_header() {
     ipv4=$(hostname -I | awk '{print $1}')
     ipv6=$(curl -s6 --max-time 3 https://ifconfig.co || hostname -I | awk '{for(i=1;i<=NF;i++) if($i ~ /:/) {print $i; exit}}')
     
-    # Check IP priority from /etc/gai.conf
-    if ! grep -q -E '^precedence ::ffff:0:0/96' /etc/gai.conf || \
-       (grep -q -E '^precedence ::ffff:0:0/96  100' /etc/gai.conf && \
-        (! grep -q -E '^label 2002::/16' /etc/gai.conf || grep -q -E '^#label 2002::/16' /etc/gai.conf)); then
+    # --- FIX START: Corrected IP priority detection logic ---
+    # The rule is simple: if the 'precedence' line for IPv4 exists and is not commented out,
+    # then IPv4 is preferred. Otherwise, the system defaults to IPv6 preference.
+    if grep -q -E '^\s*precedence ::ffff:0:0/96\s+100' /etc/gai.conf 2>/dev/null; then
         ip_priority_status="${BOLD}IPv4 Preferred${NC}"
         ip_display_order="${ipv4}${ipv6:+ / ${ipv6}}"
     else
         ip_priority_status="${BOLD}IPv6 Preferred${NC}"
         ip_display_order="${ipv6}${ipv4:+ / ${ipv4}}"
     fi
+    # --- FIX END ---
 
     # Display Header
     echo -e "${CYAN}=========================== System_DU Panel ===========================${NC}"
@@ -150,8 +151,7 @@ config_hostname() {
 manage_ipv6() {
     local action=$1
     local sysctl_conf="/etc/sysctl.conf"
-    local grub_conf="/etc/default/grub"
-
+    
     if [ "$action" == "disable" ]; then
         echo -e "${YELLOW}Disabling IPv6...${NC}"
         sed -i '/net.ipv6.conf.all.disable_ipv6/d' $sysctl_conf
@@ -176,19 +176,19 @@ set_ip_priority() {
     local priority=$1
     local gai_conf="/etc/gai.conf"
     
+    # Ensure the file exists before trying to modify it
+    touch $gai_conf
+    
     # Remove existing precedence lines to avoid duplicates
     sed -i '/^precedence ::ffff:0:0\/96/d' $gai_conf
 
     if [ "$priority" == "ipv4" ]; then
         echo -e "${YELLOW}Setting IPv4 as preferred...${NC}"
-        # This is the default behavior on many systems, but we make it explicit.
-        # Uncommenting the precedence line makes IPv4 preferred.
         echo "precedence ::ffff:0:0/96  100" >> $gai_conf
         echo -e "${GREEN}IPv4 is now preferred. Changes take effect immediately for new connections.${NC}"
     elif [ "$priority" == "ipv6" ]; then
         echo -e "${YELLOW}Setting IPv6 as preferred...${NC}"
-        # Commenting out the precedence line makes the system prefer IPv6.
-        # The line is removed above, so no action is needed.
+        # Removing the line (done above) is sufficient for most systems to prefer IPv6.
         echo -e "${GREEN}IPv6 is now preferred. Changes take effect immediately for new connections.${NC}"
     fi
 }
