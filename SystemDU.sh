@@ -23,9 +23,7 @@ display_header() {
     ipv4=$(hostname -I | awk '{print $1}')
     ipv6=$(curl -s6 --max-time 3 https://ifconfig.co || hostname -I | awk '{for(i=1;i<=NF;i++) if($i ~ /:/) {print $i; exit}}')
     
-    # --- FIX START: Corrected IP priority detection logic ---
-    # The rule is simple: if the 'precedence' line for IPv4 exists and is not commented out,
-    # then IPv4 is preferred. Otherwise, the system defaults to IPv6 preference.
+    # Check IP priority from /etc/gai.conf
     if grep -q -E '^\s*precedence ::ffff:0:0/96\s+100' /etc/gai.conf 2>/dev/null; then
         ip_priority_status="${BOLD}IPv4 Preferred${NC}"
         ip_display_order="${ipv4}${ipv6:+ / ${ipv6}}"
@@ -33,7 +31,6 @@ display_header() {
         ip_priority_status="${BOLD}IPv6 Preferred${NC}"
         ip_display_order="${ipv6}${ipv4:+ / ${ipv4}}"
     fi
-    # --- FIX END ---
 
     # Display Header
     echo -e "${CYAN}=========================== System_DU Panel ===========================${NC}"
@@ -151,24 +148,38 @@ config_hostname() {
 manage_ipv6() {
     local action=$1
     local sysctl_conf="/etc/sysctl.conf"
-    
+    local message=""
+
     if [ "$action" == "disable" ]; then
         echo -e "${YELLOW}Disabling IPv6...${NC}"
         sed -i '/net.ipv6.conf.all.disable_ipv6/d' $sysctl_conf
         sed -i '/net.ipv6.conf.default.disable_ipv6/d' $sysctl_conf
         echo "net.ipv6.conf.all.disable_ipv6 = 1" >> $sysctl_conf
         echo "net.ipv6.conf.default.disable_ipv6 = 1" >> $sysctl_conf
-        sysctl -p
-        echo -e "${GREEN}IPv6 has been disabled via sysctl. A reboot is recommended.${NC}"
+        sysctl -p >/dev/null 2>&1
+        message="${GREEN}IPv6 has been disabled via sysctl.${NC}"
     elif [ "$action" == "enable" ]; then
         echo -e "${YELLOW}Enabling IPv6...${NC}"
         sed -i '/net.ipv6.conf.all.disable_ipv6/d' $sysctl_conf
         sed -i '/net.ipv6.conf.default.disable_ipv6/d' $sysctl_conf
         echo "net.ipv6.conf.all.disable_ipv6 = 0" >> $sysctl_conf
         echo "net.ipv6.conf.default.disable_ipv6 = 0" >> $sysctl_conf
-        sysctl -p
-        echo -e "${GREEN}IPv6 has been enabled via sysctl. A reboot is recommended.${NC}"
+        sysctl -p >/dev/null 2>&1
+        message="${GREEN}IPv6 has been enabled via sysctl.${NC}"
     fi
+
+    # --- OPTIMIZATION START: Interactive Reboot Prompt ---
+    echo -e "$message"
+    echo -e "${YELLOW}To ensure the change is fully applied, a system reboot is recommended.${NC}"
+    read -p "Do you want to reboot now? (y/n): " reboot_choice
+    if [[ "$reboot_choice" == "y" || "$reboot_choice" == "Y" ]]; then
+        echo -e "${RED}Rebooting now...${NC}"
+        sleep 2
+        reboot
+    else
+        echo -e "${CYAN}Reboot cancelled. Please reboot manually later.${NC}"
+    fi
+    # --- OPTIMIZATION END ---
 }
 
 # --- 6. IP Priority Configuration ---
@@ -205,8 +216,8 @@ show_menu() {
     echo " 4. Create SWAP File"
     echo " 5. Delete SWAP File"
     echo " 6. Change Hostname"
-    echo " 7. Disable IPv6"
-    echo " 8. Enable IPv6"
+    echo " 7. Disable IPv6 (Reboot required)"
+    echo " 8. Enable IPv6 (Reboot required)"
     echo " 9. Prefer IPv4"
     echo " 10. Prefer IPv6"
     echo ""
@@ -220,6 +231,7 @@ main() {
     while true; do
         show_menu
         read -p "Please select an option [0-10]: " choice
+        local needs_pause=true
         case $choice in
             1) auto_config_system ;;
             2) config_bbr ;;
@@ -227,15 +239,24 @@ main() {
             4) config_swap ;;
             5) delete_swap ;;
             6) config_hostname ;;
-            7) manage_ipv6 "disable" ;;
-            8) manage_ipv6 "enable" ;;
+            7) 
+                manage_ipv6 "disable"
+                needs_pause=false # Don't pause if rebooting
+                ;;
+            8)
+                manage_ipv6 "enable"
+                needs_pause=false # Don't pause if rebooting
+                ;;
             9) set_ip_priority "ipv4" ;;
             10) set_ip_priority "ipv6" ;;
             0) echo "Exiting."; exit 0 ;;
             *) echo -e "${RED}Invalid option. Please try again.${NC}" ;;
         esac
-        echo ""
-        read -n 1 -s -r -p "Press any key to return to the menu..."
+        
+        if [ "$needs_pause" = true ]; then
+            echo ""
+            read -n 1 -s -r -p "Press any key to return to the menu..."
+        fi
     done
 }
 
