@@ -19,6 +19,7 @@ text_root_check_en="Error: This script must be run as root. Please use sudo."
 text_panel_title_en="System_DU Panel"
 text_time_en="Time"
 text_ip_addr_en="IP Addr"
+text_location_en="Location"
 text_ipv4_pref_en="IPv4 Preferred"
 text_ipv6_pref_en="IPv6 Preferred"
 text_sys_config_en="System Configuration"
@@ -35,7 +36,6 @@ text_kernel_version_en="Kernel"
 text_bbr_status_en="BBR Status"
 text_bbr_enabled_en="Enabled"
 text_bbr_disabled_en="Disabled"
-text_location_en="Location"
 text_menu_title_en="--- New System Auto-Configuration ---"
 text_menu_1_en="One-Click Automated Setup (Update & Dependencies)"
 text_menu_2_en="Configure BBR + FQ"
@@ -53,13 +53,52 @@ text_prompt_select_en="Please select an option"
 text_prompt_continue_en="Press any key to return to the menu..."
 text_invalid_option_en="Invalid option. Please try again."
 text_exiting_en="Exiting and cleaning up script file..."
-# ... (rest of the English text variables remain the same)
+text_auto_config_start_en="--- Starting Automated System Configuration ---"
+text_auto_config_update_en="Updating and upgrading system packages..."
+text_auto_config_deps_en="Installing essential dependencies..."
+text_auto_config_grub_en="Updating GRUB..."
+text_auto_config_done_en="--- Automated Configuration Complete! ---"
+text_bbr_backup_en="Original sysctl.conf backed up to /etc/sysctl.conf.bak_bbr"
+text_bbr_enable_en="Enabling BBR + FQ..."
+text_bbr_verify_en="Verifying BBR status..."
+text_bbr_success_en="BBR + FQ has been successfully enabled."
+text_bbr_fail_en="Failed to enable BBR. Kernel version 4.9+ is required."
+text_bbr_restore_en="Restoring original sysctl configuration..."
+text_bbr_restore_success_en="Original sysctl configuration has been restored."
+text_bbr_restore_fail_en="No backup file found. Cannot restore."
+text_swap_exists_en="A SWAP file or partition already exists."
+text_swap_prompt_size_en="Enter SWAP size in Megabytes (e.g., 1024 for 1GB):"
+text_swap_invalid_input_en="Invalid input. Please enter a number."
+text_swap_creating_en="Creating a %sMB SWAP file at /swapfile..."
+text_swap_success_en="SWAP file created and enabled successfully."
+text_swap_delete_fail_en="No /swapfile found to delete."
+text_swap_deleting_en="Disabling and deleting /swapfile..."
+text_swap_delete_success_en="SWAP file has been deleted."
+text_hostname_current_en="Current hostname is"
+text_hostname_prompt_new_en="Enter the new hostname:"
+text_hostname_empty_en="Hostname cannot be empty."
+text_hostname_setting_en="Setting new hostname to '%s'..."
+text_hostname_success_en="Hostname has been permanently changed to '%s'."
+text_hostname_note_en="Note: The change will be fully visible after a new login session."
+text_ipv6_disable_en="Disabling IPv6..."
+text_ipv6_disable_success_en="IPv6 has been disabled via sysctl."
+text_ipv6_enable_en="Enabling IPv6..."
+text_ipv6_enable_success_en="IPv6 has been enabled via sysctl."
+text_reboot_prompt_en="To ensure the change is fully applied, a system reboot is recommended."
+text_reboot_confirm_en="Do you want to reboot now? (y/n):"
+text_reboot_now_en="Rebooting now..."
+text_reboot_cancel_en="Reboot cancelled. Please reboot manually later."
+text_ipv4_set_pref_en="Setting IPv4 as preferred..."
+text_ipv4_set_pref_success_en="IPv4 is now preferred. Changes take effect immediately for new connections."
+text_ipv6_set_pref_en="Setting IPv6 as preferred..."
+text_ipv6_set_pref_success_en="IPv6 is now preferred. Changes take effect immediately for new connections."
 
 # Chinese
 text_root_check_zh="错误：此脚本必须以root用户身份运行。请使用 sudo。"
 text_panel_title_zh="System_DU 集成面板"
 text_time_zh="当前时间"
 text_ip_addr_zh="IP 地址"
+text_location_zh="IP 归属地"
 text_ipv4_pref_zh="IPv4 优先"
 text_ipv6_pref_zh="IPv6 优先"
 text_sys_config_zh="系统配置"
@@ -76,7 +115,6 @@ text_kernel_version_zh="内核版本"
 text_bbr_status_zh="BBR 状态"
 text_bbr_enabled_zh="已开启"
 text_bbr_disabled_zh="未开启"
-text_location_zh="IP 归属地"
 text_menu_title_zh="--- 新系统自动化配置 ---"
 text_menu_1_zh="一键自动化配置 (更新系统与依赖)"
 text_menu_2_zh="配置 BBR + FQ"
@@ -126,17 +164,19 @@ display_header() {
     if grep -q -E '^\s*precedence ::ffff:0:0/96\s+100' /etc/gai.conf 2>/dev/null; then
         ip_priority_status="${BOLD}$(get_text ipv4_pref)${NC}"
         ip_display_order="${ipv4}${ipv6:+ / ${ipv6}}"
-        location=$(curl -s --max-time 3 "http://ip-api.com/json/${ipv4}?fields=country,city" | jq -r '.country + ", " + .city')
+        primary_ip_for_geo=$ipv4
     else
         ip_priority_status="${BOLD}$(get_text ipv6_pref)${NC}"
         ip_display_order="${ipv6}${ipv4:+ / ${ipv4}}"
-        location=$(curl -s --max-time 3 "http://ip-api.com/json/${ipv4}?fields=country,city" | jq -r '.country + ", " + .city')
+        primary_ip_for_geo=$ipv4
     fi
 
+    location=$(curl -s --max-time 3 "http://ip-api.com/json/${primary_ip_for_geo}?fields=country,city" | jq -r 'if .country then .country + ", " + .city else "" end')
+
     echo -e "${CYAN}=========================== $(get_text panel_title) ===========================${NC}"
-    echo -e " ${YELLOW}$(get_text time_zh):${NC}    $(date '+%Y-%m-%d %H:%M:%S %A')"
-    echo -e " ${YELLOW}$(get_text ip_addr_zh):${NC} ${ip_display_order} (${ip_priority_status})"
-    echo -e " ${YELLOW}$(get_text location_zh):${NC} ${location}"
+    echo -e " ${YELLOW}$(get_text time_en):${NC}    $(date '+%Y-%m-%d %H:%M:%S %A')"
+    echo -e " ${YELLOW}$(get_text ip_addr_en):${NC} ${ip_display_order} (${ip_priority_status})"
+    [ -n "$location" ] && echo -e " ${YELLOW}$(get_text location_en):${NC} ${location}"
     echo -e "${CYAN}-----------------------------------------------------------------------${NC}"
 }
 
@@ -173,17 +213,17 @@ display_status_info() {
     os_version=$(grep "PRETTY_NAME" /etc/os-release | cut -d'=' -f2 | tr -d '"')
     kernel_version=$(uname -r)
     
-    bbr_status_val=$(sysctl net.ipv4.tcp_congestion_control | awk '{print $3}')
+    bbr_status_val=$(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk '{print $3}')
     if [ "$bbr_status_val" == "bbr" ]; then
         bbr_status="${GREEN}$(get_text bbr_enabled)${NC}"
     else
         bbr_status="${RED}$(get_text bbr_disabled)${NC}"
     fi
 
-    echo -e "${MAGENTA}${BOLD}$(get_text status):${NC}"
-    echo -e " ${YELLOW}$(get_text os_version):${NC} ${os_version}"
-    echo -e " ${YELLOW}$(get_text kernel_version):${NC}  ${kernel_version}"
-    echo -e " ${YELLOW}$(get_text bbr_status):${NC}        ${bbr_status}"
+    echo -e "${MAGENTA}${BOLD}$(get_text status_en):${NC}"
+    echo -e " ${YELLOW}$(get_text os_version_en):${NC} ${os_version}"
+    echo -e " ${YELLOW}$(get_text kernel_version_en):${NC}  ${kernel_version}"
+    echo -e " ${YELLOW}$(get_text bbr_status_en):${NC}        ${bbr_status}"
     echo -e "${CYAN}=======================================================================${NC}"
 }
 
