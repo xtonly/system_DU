@@ -33,27 +33,65 @@ text_swap_en="SWAP"
 text_status_en="System Status"
 text_os_version_en="OS Version"
 text_kernel_version_en="Kernel"
-text_bbr_status_en="BBR Status"
-text_bbr_enabled_en="Enabled"
-text_bbr_disabled_en="Disabled"
-text_menu_title_en="--- New System Auto-Configuration ---"
-text_menu_1_en="One-Click Automated Setup (Update & Dependencies)"
-text_menu_2_en="Configure BBR + FQ"
-text_menu_3_en="Restore Original Network Settings (Remove BBR)"
-text_menu_4_en="Create SWAP File"
-text_menu_5_en="Delete SWAP File"
-text_menu_6_en="Change Hostname"
-text_menu_7_en="Disable IPv6 (Reboot required)"
-text_menu_8_en="Enable IPv6 (Reboot required)"
-text_menu_9_en="Prefer IPv4"
-text_menu_10_en="Prefer IPv6"
-text_menu_11_en="Switch to Chinese (切换到中文)"
+text_net_opt_en="Network Optimization"
+text_tcp_accel_en="TCP Acceleration"
+text_menu_title_en="--- System Configuration & Management ---"
+text_menu_1_en="Show Basic System Information"
+text_menu_2_en="One-Click Automated Setup (Update & Dependencies)"
+text_menu_3_en="Configure BBR + FQ"
+text_menu_4_en="Restore Original Network Settings (Remove BBR)"
+text_menu_5_en="Create SWAP File"
+text_menu_6_en="Delete SWAP File"
+text_menu_7_en="Change Hostname"
+text_menu_8_en="Disable IPv6 (Reboot required)"
+text_menu_9_en="Enable IPv6 (Reboot required)"
+text_menu_10_en="Prefer IPv4"
+text_menu_11_en="Prefer IPv6"
+text_menu_12_en="Switch to Chinese (切换到中文)"
 text_menu_0_en="Exit & Clean Script"
 text_prompt_select_en="Please select an option"
 text_prompt_continue_en="Press any key to return to the menu..."
 text_invalid_option_en="Invalid option. Please try again."
 text_exiting_en="Exiting and cleaning up script file..."
-# ... (rest of the English text variables remain the same)
+text_auto_config_start_en="--- Starting Automated System Configuration ---"
+text_auto_config_update_en="Updating and upgrading system packages..."
+text_auto_config_deps_en="Installing essential dependencies..."
+text_auto_config_grub_en="Updating GRUB..."
+text_auto_config_done_en="--- Automated Configuration Complete! ---"
+text_bbr_backup_en="Original sysctl.conf backed up to /etc/sysctl.conf.bak_bbr"
+text_bbr_enable_en="Enabling BBR + FQ..."
+text_bbr_verify_en="Verifying BBR status..."
+text_bbr_success_en="BBR + FQ has been successfully enabled."
+text_bbr_fail_en="Failed to enable BBR. Kernel version 4.9+ is required."
+text_bbr_restore_en="Restoring original sysctl configuration..."
+text_bbr_restore_success_en="Original sysctl configuration has been restored."
+text_bbr_restore_fail_en="No backup file found. Cannot restore."
+text_swap_exists_en="A SWAP file or partition already exists."
+text_swap_prompt_size_en="Enter SWAP size in Megabytes (e.g., 1024 for 1GB):"
+text_swap_invalid_input_en="Invalid input. Please enter a number."
+text_swap_creating_en="Creating a %sMB SWAP file at /swapfile..."
+text_swap_success_en="SWAP file created and enabled successfully."
+text_swap_delete_fail_en="No /swapfile found to delete."
+text_swap_deleting_en="Disabling and deleting /swapfile..."
+text_swap_delete_success_en="SWAP file has been deleted."
+text_hostname_current_en="Current hostname is"
+text_hostname_prompt_new_en="Enter the new hostname:"
+text_hostname_empty_en="Hostname cannot be empty."
+text_hostname_setting_en="Setting new hostname to '%s'..."
+text_hostname_success_en="Hostname has been permanently changed to '%s'."
+text_hostname_note_en="Note: The change will be fully visible after a new login session."
+text_ipv6_disable_en="Disabling IPv6..."
+text_ipv6_disable_success_en="IPv6 has been disabled via sysctl."
+text_ipv6_enable_en="Enabling IPv6..."
+text_ipv6_enable_success_en="IPv6 has been enabled via sysctl."
+text_reboot_prompt_en="To ensure the change is fully applied, a system reboot is recommended."
+text_reboot_confirm_en="Do you want to reboot now? (y/n):"
+text_reboot_now_en="Rebooting now..."
+text_reboot_cancel_en="Reboot cancelled. Please reboot manually later."
+text_ipv4_set_pref_en="Setting IPv4 as preferred..."
+text_ipv4_set_pref_success_en="IPv4 is now preferred. Changes take effect immediately for new connections."
+text_ipv6_set_pref_en="Setting IPv6 as preferred..."
+text_ipv6_set_pref_success_en="IPv6 is now preferred. Changes take effect immediately for new connections."
 
 # Chinese
 text_root_check_zh="错误：此脚本必须以root用户身份运行。请使用 sudo。"
@@ -74,21 +112,21 @@ text_swap_zh="交换分区"
 text_status_zh="系统状态"
 text_os_version_zh="系统版本"
 text_kernel_version_zh="内核版本"
-text_bbr_status_zh="BBR 状态"
-text_bbr_enabled_zh="已开启"
-text_bbr_disabled_zh="未开启"
-text_menu_title_zh="--- 新系统自动化配置 ---"
-text_menu_1_zh="一键自动化配置 (更新系统与依赖)"
-text_menu_2_zh="配置 BBR + FQ"
-text_menu_3_zh="还原网络设置 (移除 BBR)"
-text_menu_4_zh="创建 SWAP 交换文件"
-text_menu_5_zh="删除 SWAP 交换文件"
-text_menu_6_zh="更改主机名"
-text_menu_7_zh="禁用 IPv6 (需要重启)"
-text_menu_8_zh="启用 IPv6 (需要重启)"
-text_menu_9_zh="设置为 IPv4 优先"
-text_menu_10_zh="设置为 IPv6 优先"
-text_menu_11_zh="Switch to English (切换到英文)"
+text_net_opt_zh="网络优化"
+text_tcp_accel_zh="TCP 加速"
+text_menu_title_zh="--- 系统配置与管理 ---"
+text_menu_1_zh="显示系统基本信息"
+text_menu_2_zh="一键自动化配置 (更新与依赖)"
+text_menu_3_zh="配置 BBR + FQ"
+text_menu_4_zh="还原网络设置 (移除 BBR)"
+text_menu_5_zh="创建 SWAP 交换文件"
+text_menu_6_zh="删除 SWAP 交换文件"
+text_menu_7_zh="更改主机名"
+text_menu_8_zh="禁用 IPv6 (需要重启)"
+text_menu_9_zh="启用 IPv6 (需要重启)"
+text_menu_10_zh="设置为 IPv4 优先"
+text_menu_11_zh="设置为 IPv6 优先"
+text_menu_12_zh="Switch to English (切换到英文)"
 text_menu_0_zh="退出并清理脚本"
 text_prompt_select_zh="请输入选项"
 text_prompt_continue_zh="按任意键返回主菜单..."
@@ -126,17 +164,16 @@ display_header() {
     if grep -q -E '^\s*precedence ::ffff:0:0/96\s+100' /etc/gai.conf 2>/dev/null; then
         ip_priority_status="${BOLD}$(get_text ipv4_pref)${NC}"
         ip_display_order="${ipv4}${ipv6:+ / ${ipv6}}"
-        location=$(curl -s --max-time 3 "http://ip-api.com/json/${ipv4}?fields=country,city" | jq -r '.country + ", " + .city')
+        primary_ip_for_geo=$ipv4
     else
         ip_priority_status="${BOLD}$(get_text ipv6_pref)${NC}"
         ip_display_order="${ipv6}${ipv4:+ / ${ipv4}}"
-        location=$(curl -s --max-time 3 "http://ip-api.com/json/${ipv4}?fields=country,city" | jq -r '.country + ", " + .city')
+        primary_ip_for_geo=$ipv4
     fi
 
     echo -e "${CYAN}=========================== $(get_text panel_title) ===========================${NC}"
-    echo -e " ${YELLOW}$(get_text time_zh):${NC}    $(date '+%Y-%m-%d %H:%M:%S %A')"
-    echo -e " ${YELLOW}$(get_text ip_addr_zh):${NC} ${ip_display_order} (${ip_priority_status})"
-    echo -e " ${YELLOW}$(get_text location_zh):${NC} ${location}"
+    echo -e " ${YELLOW}$(get_text time_en):${NC}    $(date '+%Y-%m-%d %H:%M:%S %A')"
+    echo -e " ${YELLOW}$(get_text ip_addr_en):${NC} ${ip_display_order} (${ip_priority_status})"
     echo -e "${CYAN}-----------------------------------------------------------------------${NC}"
 }
 
@@ -144,21 +181,23 @@ display_system_info() {
     cpu_info=$(grep 'model name' /proc/cpuinfo | uniq | awk -F': ' '{print $2}')
     cpu_cores=$(grep -c 'processor' /proc/cpuinfo)
     
-    mem_info_line=$(free -h | awk '/^Mem:/ {print $2, $3}')
+    # --- FIX START: Force units to MB and GB ---
+    mem_info_line=$(free -m | awk '/^Mem:/ {print $2, $3}')
     total_mem=$(echo "$mem_info_line" | awk '{print $1}')
     used_mem=$(echo "$mem_info_line" | awk '{print $2}')
-    mem_display_str="$(get_text total): ${total_mem} / $(get_text used): ${used_mem}"
+    mem_display_str="$(get_text total): ${total_mem}MB / $(get_text used): ${used_mem}MB"
 
-    swap_info_line=$(free -h | awk '/^Swap:/ {print $2, $3}')
+    swap_info_line=$(free -m | awk '/^Swap:/ {print $2, $3}')
     total_swap=$(echo "$swap_info_line" | awk '{print $1}')
     used_swap=$(echo "$swap_info_line" | awk '{print $2}')
-    swap_display_str="$(get_text total): ${total_swap} / $(get_text used): ${used_swap}"
+    swap_display_str="$(get_text total): ${total_swap}MB / $(get_text used): ${used_swap}MB"
 
-    disk_info_line=$(df -h / | awk 'NR==2 {print $2, $3, $5}')
+    disk_info_line=$(df -B1G / | awk 'NR==2 {print $2, $3, $5}')
     total_disk=$(echo "$disk_info_line" | awk '{print $1}')
     used_disk=$(echo "$disk_info_line" | awk '{print $2}')
     percent_disk=$(echo "$disk_info_line" | awk '{print $3}')
-    disk_display_str="$(get_text used): ${used_disk} / $(get_text total): ${total_disk} (${percent_disk})"
+    disk_display_str="$(get_text used): ${used_disk}GB / $(get_text total): ${total_disk}GB (${percent_disk})"
+    # --- FIX END ---
     
     echo -e "${MAGENTA}${BOLD}$(get_text sys_config):${NC}"
     echo -e " ${YELLOW}$(get_text cpu_model):${NC}  ${cpu_info}"
@@ -166,25 +205,120 @@ display_system_info() {
     echo -e " ${YELLOW}$(get_text memory):${NC}     ${mem_display_str}"
     echo -e " ${YELLOW}$(get_text swap):${NC}     ${swap_display_str}"
     echo -e " ${YELLOW}$(get_text disk):${NC}   ${disk_display_str}"
-    echo -e "${CYAN}-----------------------------------------------------------------------${NC}"
+    echo -e "${CYAN}=======================================================================${NC}"
 }
 
-display_status_info() {
-    os_version=$(grep "PRETTY_NAME" /etc/os-release | cut -d'=' -f2 | tr -d '"')
-    kernel_version=$(uname -r)
-    
-    bbr_status_val=$(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk '{print $3}')
-    if [ "$bbr_status_val" == "bbr" ]; then
-        bbr_status="${GREEN}$(get_text bbr_enabled)${NC}"
+# --- New Function: Basic System Information Screen ---
+show_basic_system_info() {
+    clear
+    local title
+    if [ "$CURRENT_LANG" == "zh" ]; then
+        title="系统基本信息"
     else
-        bbr_status="${RED}$(get_text bbr_disabled)${NC}"
+        title="Basic System Information"
     fi
+    echo -e "${CYAN}${title}:${NC}"
+    echo -e "----------------------------------------"
+    
+    # Uptime
+    uptime_str=$(uptime -p | sed 's/up //')
+    printf "%-18s: %s\n" "Uptime" "$uptime_str"
 
-    echo -e "${MAGENTA}${BOLD}$(get_text status_en):${NC}"
-    echo -e " ${YELLOW}$(get_text os_version_en):${NC} ${os_version}"
-    echo -e " ${YELLOW}$(get_text kernel_version_en):${NC}  ${kernel_version}"
-    echo -e " ${YELLOW}$(get_text bbr_status_en):${NC}        ${bbr_status}"
-    echo -e "${CYAN}=======================================================================${NC}"
+    # Processor
+    cpu_model=$(grep 'model name' /proc/cpuinfo | uniq | awk -F': ' '{print $2}')
+    printf "%-18s: %s\n" "Processor" "$cpu_model"
+    
+    # CPU cores
+    cpu_cores=$(grep -c 'processor' /proc/cpuinfo)
+    cpu_freq=$(awk '/cpu MHz/ {sum+=$4; count++} END {printf "%.3f", sum/count}' /proc/cpuinfo)
+    printf "%-18s: %d @ %.3f MHz\n" "CPU cores" "$cpu_cores" "$cpu_freq"
+
+    # AES-NI
+    if grep -q -o aes /proc/cpuinfo; then
+        aes_status="${GREEN}✓ Enabled${NC}"
+    else
+        aes_status="${RED}✗ Disabled${NC}"
+    fi
+    printf "%-18s: %b\n" "AES-NI" "$aes_status"
+
+    # Virtualization
+    if grep -q -E 'svm|vmx' /proc/cpuinfo; then
+        virt_status="${GREEN}✓ Enabled${NC}"
+    else
+        virt_status="${RED}✗ Disabled${NC}"
+    fi
+    printf "%-18s: %b\n" "VM-x/AMD-V" "$virt_status"
+
+    # TCP Acceleration
+    congestion_algo=$(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk -F'= ' '{print $2}')
+    qdisc_algo=$(sysctl net.core.default_qdisc 2>/dev/null | awk -F'= ' '{print $2}')
+    if [ "$congestion_algo" == "bbr" ] && [[ "$qdisc_algo" == "fq"* ]]; then
+        tcp_accel_status="${GREEN}${congestion_algo} + ${qdisc_algo}${NC}"
+    else
+        tcp_accel_status="${RED}${congestion_algo} + ${qdisc_algo}${NC}"
+    fi
+    printf "%-18s: %b\n" "$(get_text tcp_accel)" "$tcp_accel_status"
+
+    # RAM, Swap, Disk
+    ram_total=$(free -m | awk '/^Mem:/ {print $2}')"MB"
+    swap_total=$(free -m | awk '/^Swap:/ {print $2}')"MB"
+    disk_total=$(df -B1G / | awk 'NR==2 {print $2}')"GB"
+    printf "%-18s: %s\n" "RAM" "$ram_total"
+    printf "%-18s: %s\n" "Swap" "$swap_total"
+    printf "%-18s: %s\n" "Disk" "$disk_total"
+
+    # Distro, Kernel, VM Type
+    distro=$(grep "PRETTY_NAME" /etc/os-release | cut -d'=' -f2 | tr -d '"')
+    kernel=$(uname -r)
+    vm_type=$(systemd-detect-virt)
+    printf "%-18s: %s\n" "Distro" "$distro"
+    printf "%-18s: %s\n" "Kernel" "$kernel"
+    printf "%-18s: %s\n" "VM Type" "$vm_type"
+    
+    # IP Status
+    ipv4_status=$(ip -4 addr | grep -q 'inet' && echo "${GREEN}✓ Online${NC}" || echo "${RED}✗ Offline${NC}")
+    ipv6_status=$(ip -6 addr | grep -q 'inet6' && echo "${GREEN}✓ Online${NC}" || echo "${RED}✗ Offline${NC}")
+    printf "%-18s: %b / %b\n" "IPv4/IPv6" "$ipv4_status" "$ipv6_status"
+
+    # Network Info
+    local net_title
+    if [ "$CURRENT_LANG" == "zh" ]; then
+        net_title="网络信息"
+    else
+        net_title="Network Information"
+    fi
+    echo -e "\n${CYAN}${net_title}:${NC}"
+    echo -e "----------------------------------------"
+    
+    ipv4=$(hostname -I | awk '{print $1}')
+    ip_info=$(curl -s --max-time 5 "http://ip-api.com/json/${ipv4}?fields=status,message,country,city,isp,as,query")
+    
+    if [ "$(echo "$ip_info" | jq -r .status)" == "success" ]; then
+        local host_info
+        local isp_info
+        isp_info=$(echo "$ip_info" | jq -r .isp)
+        if command -v dig &> /dev/null; then
+             host_info=$(dig +short -x "$ipv4" | sed 's/\.$//')
+        fi
+        # Fallback for Host field
+        if [ -z "$host_info" ]; then
+            host_info=${isp_info:-$ipv4} # Fallback to ISP, then to IP
+        fi
+        
+        # Determine alignment based on language
+        local label_width="-18s"
+        if [ "$CURRENT_LANG" == "zh" ]; then
+            label_width="-12s" # Chinese characters are wider
+        fi
+
+        printf "%${label_width}: %s\n" "ISP" "$isp_info"
+        printf "%${label_width}: %s\n" "ASN" "$(echo "$ip_info" | jq -r .as)"
+        printf "%${label_width}: %s\n" "Host" "$host_info"
+        printf "%${label_width}: %s, %s\n" "$(get_text location)" "$(echo "$ip_info" | jq -r .city)" "$(echo "$ip_info" | jq -r .country)"
+        printf "%${label_width}: %s\n" "Country" "$(echo "$ip_info" | jq -r .country)"
+    else
+        echo "Could not retrieve network information."
+    fi
 }
 
 # --- Core Functions ---
@@ -194,7 +328,7 @@ auto_config_system() {
     echo -e "${YELLOW}$(get_text auto_config_update)${NC}"
     apt-get -y update && apt-get -y upgrade
     echo -e "${YELLOW}$(get_text auto_config_deps)${NC}"
-    apt-get install -y curl wget socat cron sudo jq
+    apt-get install -y curl wget socat cron sudo jq dnsutils
     echo -e "${YELLOW}$(get_text auto_config_grub)${NC}"
     update-grub
     echo -e "${GREEN}$(get_text auto_config_done)${NC}"
@@ -318,7 +452,7 @@ manage_ipv6() {
 set_ip_priority() {
     local priority=$1
     local gai_conf="/etc/gai.conf"
-
+    
     touch $gai_conf
     sed -i '/^precedence ::ffff:0:0\/96/d' $gai_conf
 
@@ -337,7 +471,6 @@ show_menu() {
     clear
     display_header
     display_system_info
-    display_status_info
     echo -e "${BOLD}$(get_text menu_title)${NC}"
     echo " 1. $(get_text menu_1)"
     echo " 2. $(get_text menu_2)"
@@ -350,6 +483,7 @@ show_menu() {
     echo " 9. $(get_text menu_9)"
     echo " 10. $(get_text menu_10)"
     echo " 11. $(get_text menu_11)"
+    echo " 12. $(get_text menu_12)"
     echo ""
     echo " 0. $(get_text menu_0)"
     echo -e "${CYAN}=======================================================================${NC}"
@@ -360,29 +494,30 @@ main() {
     check_root
     while true; do
         show_menu
-        read -p "$(get_text prompt_select) [0-11]: " choice
+        read -p "$(get_text prompt_select) [0-12]: " choice
         local needs_pause=true
         case $choice in
-            1) auto_config_system ;;
-            2) config_bbr ;;
-            3) restore_bbr ;;
-            4) config_swap ;;
-            5) delete_swap ;;
-            6) config_hostname ;;
-            7) manage_ipv6 "disable"; needs_pause=false ;;
-            8) manage_ipv6 "enable"; needs_pause=false ;;
-            9) set_ip_priority "ipv4" ;;
-            10) set_ip_priority "ipv6" ;;
-            11) toggle_language; needs_pause=false ;;
-            0)
+            1) show_basic_system_info ;;
+            2) auto_config_system ;;
+            3) config_bbr ;;
+            4) restore_bbr ;;
+            5) config_swap ;;
+            6) delete_swap ;;
+            7) config_hostname ;;
+            8) manage_ipv6 "disable"; needs_pause=false ;;
+            9) manage_ipv6 "enable"; needs_pause=false ;;
+            10) set_ip_priority "ipv4" ;;
+            11) set_ip_priority "ipv6" ;;
+            12) toggle_language; needs_pause=false ;;
+            0) 
                 echo "$(get_text exiting)"
                 # Self-cleaning command
                 rm -- "$0"
-                exit 0
+                exit 0 
                 ;;
             *) echo -e "${RED}$(get_text invalid_option)${NC}" ;;
         esac
-
+        
         if [ "$needs_pause" = true ]; then
             echo ""
             read -n 1 -s -r -p "$(get_text prompt_continue)"
